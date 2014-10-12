@@ -1,0 +1,60 @@
+
+The following have been reloaded with a version change:
+  1) Java/1.7.0_51 => Java/1.8.0_5
+
+File: 300914_Village_scG_sample2_epi3.xml seed: 1413146427070 threads: 1
+FATAL: Error inserting nvidia (/lib/modules/2.6.32-279.14.1.el6.x86_64/kernel/drivers/video/nvidia.ko): No such device
+  Using ambiguities in tree likelihood.
+  With 950 unique site patterns.
+  Using rescaling scheme : dynamic
+  Using ambiguities in tree likelihood.
+  With 1980 unique site patterns.
+  Using rescaling scheme : dynamic
+  Using ambiguities in tree likelihood.
+  With 1753 unique site patterns.
+  Using rescaling scheme : dynamic
+Operator                                                                            Tuning    #accept    #reject      Pr(m)  Pr(acc|m)
+ScaleOperator(treeScaler.t:tree)                                                    0.8303        312     128147     0.0227     0.0024 Try setting scaleFactor to about 0.911
+ScaleOperator(treeRootScaler.t:tree)                                                0.7247      24245     104294     0.0227     0.1886 
+Uniform(UniformOperator.t:tree)                                                          -     193168    1092932     0.2271     0.1502 
+SubtreeSlide(SubtreeSlide.t:tree)                                                   0.4132      53512     587547     0.1136     0.0835 Try decreasing size to about 0.207
+Exchange(narrow.t:tree)                                                                  -      39170     603757     0.1136     0.0609 
+Exchange(wide.t:tree)                                                                    -         83     128066     0.0227     0.0006 
+WilsonBalding(WilsonBalding.t:tree)                                                      -        366     127718     0.0227     0.0029 
+ScaleOperator(gammaShapeScaler.s:300914_Village_scG_sample2_epi3_1)                 0.7340        247       4060     0.0008     0.0573 Try setting scaleFactor to about 0.857
+DeltaExchangeOperator(FrequenciesExchanger.s:300914_Village_scG_sample2_epi3_1)     0.0147        942       3253     0.0008     0.2246 
+ScaleOperator(RateACScaler.s:300914_Village_scG_sample2_epi3_1)                     0.7410        621       3675     0.0008     0.1446 
+ScaleOperator(RateAGScaler.s:300914_Village_scG_sample2_epi3_1)                     0.7754        384       3903     0.0008     0.0896 Try setting scaleFactor to about 0.881
+ScaleOperator(RateATScaler.s:300914_Village_scG_sample2_epi3_1)                     0.7202        579       3781     0.0008     0.1328 
+ScaleOperator(RateCGScaler.s:300914_Village_scG_sample2_epi3_1)                     0.6691        641       3638     0.0008     0.1498 
+ScaleOperator(RateGTScaler.s:300914_Village_scG_sample2_epi3_1)                     0.6907        639       3689     0.0008     0.1476 
+ScaleOperator(gammaShapeScaler.s:300914_Village_scG_sample2_epi3_2)                 0.8072        264       3940     0.0008     0.0628 Try setting scaleFactor to about 0.898
+DeltaExchangeOperator(FrequenciesExchanger.s:300914_Village_scG_sample2_epi3_2)     0.0123        999       3301     0.0008     0.2323 
+ScaleOperator(RateACScaler.s:300914_Village_scG_sample2_epi3_2)                     0.7171        372       3895     0.0008     0.0872 Try setting scaleFactor to about 0.847
+ScaleOperator(RateAGScaler.s:300914_Village_scG_sample2_epi3_2)                     0.7181        232       4062     0.0008     0.0540 Try setting scaleFactor to about 0.847
+ScaleOperator(RateATScaler.s:300914_Village_scG_sample2_epi3_2)                     0.6512        272       4108     0.0008     0.0621 Try setting scaleFactor to about 0.807
+ScaleOperator(RateCGScaler.s:300914_Village_scG_sample2_epi3_2)                     0.6900        542       3821     0.0008     0.1242 
+ScaleOperator(RateGTScaler.s:300914_Village_scG_sample2_epi3_2)                     0.6840        430       3898     0.0008     0.0994 Try setting scaleFactor to about 0.827
+ScaleOperator(gammaShapeScaler.s:300914_Village_scG_sample2_epi3_3)                 0.7946        225       4018     0.0008     0.0530 Try setting scaleFactor to about 0.891
+DeltaExchangeOperator(FrequenciesExchanger.s:300914_Village_scG_sample2_epi3_3)     0.0118        762       3680     0.0008     0.1715 
+ScaleOperator(RateACScaler.s:300914_Village_scG_sample2_epi3_3)                     0.6891        308       3976     0.0008     0.0719 Try setting scaleFactor to about 0.83
+ScaleOperator(RateAGScaler.s:300914_Village_scG_sample2_epi3_3)                     0.7816        197       3969     0.0008     0.0473 Try setting scaleFactor to about 0.884
+ScaleOperator(RateATScaler.s:300914_Village_scG_sample2_epi3_3)                     0.7440        314       3913     0.0008     0.0743 Try setting scaleFactor to about 0.863
+ScaleOperator(RateCGScaler.s:300914_Village_scG_sample2_epi3_3)                     0.6939        400       3807     0.0008     0.0951 Try setting scaleFactor to about 0.833
+ScaleOperator(RateGTScaler.s:300914_Village_scG_sample2_epi3_3)                     0.6971        329       3951     0.0008     0.0769 Try setting scaleFactor to about 0.835
+ScaleOperator(ucldMeanScaler.c:clock)                                               0.8602       1549      41134     0.0076     0.0363 Try setting scaleFactor to about 0.927
+ScaleOperator(ucldStdevScaler.c:clock)                                              0.9073       3803     124904     0.0227     0.0295 Try setting scaleFactor to about 0.953
+IntRandomWalkOperator(CategoriesRandomWalk.c:clock)                                      -     278408     150227     0.0757     0.6495 
+SwapOperator(CategoriesSwapOperator.c:clock)                                             -      36672     392352     0.0757     0.0855 
+UniformOperator(CategoriesUniform.c:clock)                                               -      63447     364635     0.0757     0.1482 
+UpDownOperator(relaxedUpDownOperator.c:clock)                                       0.9070        662     127804     0.0227     0.0052 Try setting scaleFactor to about 0.952
+ScaleOperator(popSizesScaler.t:tree)                                                0.5768     172457     471532     0.1136     0.2678 
+DeltaExchangeOperator(groupSizesDelta.t:tree)                                      11.0354      58733     198327     0.0454     0.2285 
+
+     Tuning: The value of the operator's tuning parameter, or '-' if the operator can't be optimized.
+    #accept: The total number of times a proposal by this operator has been accepted.
+    #reject: The total number of times a proposal by this operator has been rejected.
+      Pr(m): The probability this operator is chosen in a step of the MCMC (i.e. the normalized weight).
+  Pr(acc|m): The acceptance probability (#accept as a fraction of the total proposals for this operator).
+
+Start likelihood: -687447.5977566778 
