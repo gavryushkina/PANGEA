@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 \usepackage{amsmath, amsthm,amssymb}
 \usepackage{graphicx}
 \usepackage{wrapfig}
@@ -31,15 +31,18 @@
 
 \section{Summary}
 
-We have looked at the Village simulation scenarios (October data) and used all three gene regions to estimate phylogenies and epidemiological parameters. We plan to run the same analysis only for the pol sequences and compare the estimates. 
+We have looked at the Village simulation scenarios (October data) and used all three gene regions to estimate phylogenies and epidemiological parameters.
 
 \section{Methods}
 
-We used Bayesian MCMC methods to estimate phylogeny and epidemiological parameters from sequence data. We applied two different prior models for the tree branching process (transmission process): Bayesian skyline model and birth-death skyline model with sampled ancestors. There is a parameter unidentifiably for this model meaning that one of the parameters should be known to enable effective inference. Because of this, we placed a strong prior on the death rate parameter, $\mu$, with mean rate of $0.1$ per year, that is, we expect that an infected individuals dies in 10 years after being infected. The model also considers a probability, $r$, that an individual stops causing further infectious after sampling due to treatment or behaviour change. 
+We used Bayesian MCMC methods to estimate phylogeny and epidemiological parameters from sequence data. We applied two different prior models for the tree branching process (transmission process): Bayesian skyline model and birth-death skyline model with sampled ancestors. 
+
+The birth-death skyline has three per-individual rate parameters, the birth or infection rate, $\lambda$, death rate, $\mu$, and sampling rate, $\psi$, and a parameter,  $r$, being the probability of removal at sampling due to treatment or behaviour change. This model is non-identifiable meaning that one of the parameters must be known for effective inference. Because of this, we place a strong prior on $\mu$ with mean rate of $0.1$ per year, that is, the expected time to death after infection is ten years. 
+%The model also considers a probability, $r$, that an individual stops causing further infections after sampling due to treatment or behaviour change. 
 
 \section{Primary results}
 
-We have analysed three samples from epidemic 1 with sample scheme 1 and epidemic 3 with sample scheme 1 (6 analyses in total). At the time we have not finished the analyses. We present here preliminary results from the analysis with Bayesian skyline tree prior. We estimated that the epidemic was growing at the time of sampling for all six analyses. Although the rate of growth differs from sample to sample and the growth was slowing down for all samples. Figure~\ref{fig: popSize} shows the skyline estimates of the infected population size through time.  From the estimates of the tree heights:
+We have analysed three samples from epidemic 1 with sample scheme 1 and epidemic 3 with sample scheme 1 (6 analyses in total). At the time of writing we have not finished the analyses. We present here preliminary results from the analysis with Bayesian skyline tree prior. We estimated that the epidemic was growing at the time of sampling for all six analyses. Although the rate of growth differs from sample to sample and the growth rate was slowing down for all samples. Figure~\ref{fig: popSize} shows the skyline estimates of the infected population size through time.  From the estimates of the tree heights:
 
 \vskip2mm
 
@@ -67,17 +70,17 @@ The graph shows how the infected population size  grows through time for scG sam
 \end{figure}
 \end{center} 
 
-Due to the time frame we cannot yet present the results from the analysis with the birth-death skyline model with sampled ancestors. We anticipate to estimate parameters: 
+We cannot yet present the results from the analysis with birth-death skyline model with sampled ancestors as the analyses are incomplete. We anticipate to reporting estimates for parameters in a fixed number of intervals over the period of the epidemic: 
 \vskip2mm
 
 \begin{tabular} {cp{0.9\textwidth}}
-$\delta$ & the total rate of becoming uninfectious due to death or sampling. It can be derived as  $\mu + \psi r$; \\
+$\delta$ & the total rate of removal due to death or sampling. $\delta$ is defined as  $\mu + \psi r$; \\
 
-$R_0$ & the effective reproductive number defined as $\frac \lambda \delta$, where $\lambda$ is a transmission rate;  \\
+$R_e$ & the effective reproductive number defined as $\frac \lambda \delta$;  \\
 
-$s$ & the sampling proportion and can be derived as $\frac \psi {\mu + \psi}$;  and\\
+$s$ & the sampling proportion, $\frac \psi {\mu + \psi}$; and\\
 
-$r$ & the probability that a sampled individual will not cause further infectious;
+$r$ & the probability of removal at sampling; 
 \end{tabular}
 
 \vskip2mm
@@ -86,17 +89,22 @@ $r$ & the probability that a sampled individual will not cause further infectiou
 
 \section{Interpretation}
 
-We can estimate the past epidemiological dynamics. The computation time is quite large although is feasible for datasets with approximately 300 samples. 
-
-
+We can estimate the past epidemiological dynamics and estimate how the parameters driving the epidemic change over time.  Most properties of the epidemic that are not explicit parameters of the model (for example, the total number of infected) can be inferred either through analytic calculations based on estimated parameters, or further simulations.  
 
 \section{Outlook}
 
-To use the birth-death model, we need information about one of the parameters, such as the total rate of becoming uninfectious, i.e., the expected time from the time of infection until the time when the person stops causing other infectious due to treatment, behaviour change or death. 
+ The computation time required for making reliable estimates is  long but feasible for datasets with approximately 300 samples. 
+
+
+To use the birth-death model, we need information about one of the parameters such as the total removal rate, that is, the expected time from infection until the person stops causing other infectious due to treatment, behaviour change, or death.  Clinical observations such as known death times or observed behavioural changes from which informative priors could be drawn would help.
+
+
+
 
 \section{Supplement}
 
-Our model allows to estimate samples that are direct ancestors of other samples in a transmission chain and removal (from epidemic) at sampling probability. Figure~\ref{fig: SA} shows preliminary posterior estimates of sampled ancestors for one of the samples. The mean estimate and 95\% HPD for $r$ was 0.9 [0.77, 0.98] for scA sample 1 epidemic 1. 
+Our model allows to estimate samples that are direct ancestors of other samples in a transmission chain and removal (from epidemic) at sampling probability. Figure~\ref{fig: SA} shows preliminary posterior estimates of sampled ancestors for one of the samples.  The mean estimate and 95\% HPD for $r$ was 0.9 [0.77, 0.98] for scA sample 1 epidemic 1. 
+
 \begin{center} 
 \begin{figure}[!h]
 \includegraphics[width=4in]{sa_graph_scA}
