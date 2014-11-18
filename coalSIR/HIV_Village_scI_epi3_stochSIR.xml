@@ -5,8 +5,8 @@
 
    <state id="state" storeEvery="1000">
         <stateNode spec="RealParameter" id="volz.n_S0" value="8000"/>
-        <stateNode spec="RealParameter" id="volz.R0" value="2"/>
-        <stateNode spec="RealParameter" id="volz.gamma" value="0.5"/>
+        <stateNode spec="RealParameter" id="volz.R0" value="10"/>
+        <stateNode spec="RealParameter" id="volz.gamma" value="0.05"/>
         <stateNode spec="RealParameter" id="volz.origin" value="70"/>
     </state>
 
@@ -51,7 +51,7 @@
     
       <!--<operator id='S0' spec='ScaleOperator' scaleFactor="0.8" optimise="false" weight="1">
             <parameter idref="volz.n_S0"/>
-      </operator>      -->
+      </operator>      -->   
         
       <operator id='origin' spec='ScaleOperator' scaleFactor="0.8" optimise="false" weight="1">
           <parameter idref="volz.origin"/>
@@ -87,5 +87,4 @@
         </logger>
 
     </run>
-
 </beast>
