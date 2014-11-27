@@ -1,0 +1,857 @@
+
+R version 3.1.1 (2014-07-10) -- "Sock it to Me"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.1.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> library(ggplot2)
+> 
+> table1 <- read.table('300914_Village_scG_sample1_epi3.log', skip=476, header =T)
+> table2 <- read.table('300914_Village_scH_sample1_epi3.log', skip=622, header =T)
+> table3 <- read.table('300914_Village_scI_sample1_epi3.log', skip=609, header =T)
+> 
+> #sorted_origin = sort(origin, decreasing = FALSE)
+> #up_index = length(sorted_origin) - ceiling(length(sorted_origin)*0.025)
+> #up=sorted_origin[up_index]
+> 
+> size = length(table1$origin)
+> burnin = ceiling(size*0.1)
+> origin = table1$origin[(burnin+1):size]
+> 
+> up1=mean(origin)
+> 
+> size = length(table2$origin)
+> burnin = ceiling(size*0.1)
+> origin = table2$origin[(burnin+1):size]
+> 
+> up2=mean(origin)
+> 
+> size = length(table3$origin)
+> burnin = ceiling(size*0.1)
+> origin = table3$origin[(burnin+1):size]
+> 
+> up3=mean(origin)
+> 
+> xmax=max(c(up1,up2,up3))
+> 
+> step=xmax/300
+> 
+> size = length(table1$origin)
+> burnin = ceiling(size*0.1)
+> origin = table1$origin[(burnin+1):size]
+> 
+> library(coda)
+Loading required package: lattice
+> 
+> origin_mcmc = as.mcmc(origin)
+> origin_hpd = HPDinterval(origin_mcmc, prob=0.95)
+> 
+> #up = origin_hpd[1,2]
+> up=mean(origin)
+> 
+> 
+> times <-c(0, up-27, up-24, up-21, up-18, up-15, up-12, up-9, up-6, up-3, up)
+> 
+> sizeminburnin = size - burnin
+> array_size = 10 * sizeminburnin
+> rnot <- array(1:array_size, dim=c(10,sizeminburnin))
+> 
+> current_index = match('rnot1', colnames(table1))
+> 
+> for (i in 1:10) {
++     rnot[i,] = table1[,current_index][(burnin+1):size]
++     current_index=current_index+1
++ }
+> 
+> meanrnot <- vector()
+> highrnot <- vector()
+> lowrnot <- vector()
+> 
+> for (i in 1:10) {
++     current_rnot = rnot[i,]
++     meanrnot <- c(meanrnot, median(current_rnot))
++     rnot_mcmc = as.mcmc(current_rnot)
++     rnot_hpd = HPDinterval(rnot_mcmc, prob=0.95)
++     highrnot <- c(highrnot, rnot_hpd[1,2])
++     lowrnot <- c(lowrnot, rnot_hpd[1,1])
++ }
+> 
+> times_split1 <- vector()
+> meanrnot_split1 <- vector()
+> highrnot_split1 <- vector()
+> lowrnot_split1 <- vector()
+> 
+> current_index=1
+> current_time=times[1]
+> for (i in 1:300) {
++     if (times[current_index+1]<current_time) {
++         current_index=current_index+1
++     }
++     times_split1 <- c(times_split1, current_time)
++     meanrnot_split1 <- c(meanrnot_split1, meanrnot[current_index])
++     highrnot_split1 <- c(highrnot_split1, highrnot[current_index])
++     lowrnot_split1 <- c(lowrnot_split1, lowrnot[current_index])
++     current_time=current_time+step
++     print(current_time)
++     print(up)
++     if (current_time > up) {
++         break
++     }
++ }
+[1] 0.170395
+[1] 51.11849
+[1] 0.3407899
+[1] 51.11849
+[1] 0.5111849
+[1] 51.11849
+[1] 0.6815798
+[1] 51.11849
+[1] 0.8519748
+[1] 51.11849
+[1] 1.02237
+[1] 51.11849
+[1] 1.192765
+[1] 51.11849
+[1] 1.36316
+[1] 51.11849
+[1] 1.533555
+[1] 51.11849
+[1] 1.70395
+[1] 51.11849
+[1] 1.874344
+[1] 51.11849
+[1] 2.044739
+[1] 51.11849
+[1] 2.215134
+[1] 51.11849
+[1] 2.385529
+[1] 51.11849
+[1] 2.555924
+[1] 51.11849
+[1] 2.726319
+[1] 51.11849
+[1] 2.896714
+[1] 51.11849
+[1] 3.067109
+[1] 51.11849
+[1] 3.237504
+[1] 51.11849
+[1] 3.407899
+[1] 51.11849
+[1] 3.578294
+[1] 51.11849
+[1] 3.748689
+[1] 51.11849
+[1] 3.919084
+[1] 51.11849
+[1] 4.089479
+[1] 51.11849
+[1] 4.259874
+[1] 51.11849
+[1] 4.430269
+[1] 51.11849
+[1] 4.600664
+[1] 51.11849
+[1] 4.771059
+[1] 51.11849
+[1] 4.941454
+[1] 51.11849
+[1] 5.111849
+[1] 51.11849
+[1] 5.282244
+[1] 51.11849
+[1] 5.452638
+[1] 51.11849
+[1] 5.623033
+[1] 51.11849
+[1] 5.793428
+[1] 51.11849
+[1] 5.963823
+[1] 51.11849
+[1] 6.134218
+[1] 51.11849
+[1] 6.304613
+[1] 51.11849
+[1] 6.475008
+[1] 51.11849
+[1] 6.645403
+[1] 51.11849
+[1] 6.815798
+[1] 51.11849
+[1] 6.986193
+[1] 51.11849
+[1] 7.156588
+[1] 51.11849
+[1] 7.326983
+[1] 51.11849
+[1] 7.497378
+[1] 51.11849
+[1] 7.667773
+[1] 51.11849
+[1] 7.838168
+[1] 51.11849
+[1] 8.008563
+[1] 51.11849
+[1] 8.178958
+[1] 51.11849
+[1] 8.349353
+[1] 51.11849
+[1] 8.519748
+[1] 51.11849
+[1] 8.690143
+[1] 51.11849
+[1] 8.860538
+[1] 51.11849
+[1] 9.030932
+[1] 51.11849
+[1] 9.201327
+[1] 51.11849
+[1] 9.371722
+[1] 51.11849
+[1] 9.542117
+[1] 51.11849
+[1] 9.712512
+[1] 51.11849
+[1] 9.882907
+[1] 51.11849
+[1] 10.0533
+[1] 51.11849
+[1] 10.2237
+[1] 51.11849
+[1] 10.39409
+[1] 51.11849
+[1] 10.56449
+[1] 51.11849
+[1] 10.73488
+[1] 51.11849
+[1] 10.90528
+[1] 51.11849
+[1] 11.07567
+[1] 51.11849
+[1] 11.24607
+[1] 51.11849
+[1] 11.41646
+[1] 51.11849
+[1] 11.58686
+[1] 51.11849
+[1] 11.75725
+[1] 51.11849
+[1] 11.92765
+[1] 51.11849
+[1] 12.09804
+[1] 51.11849
+[1] 12.26844
+[1] 51.11849
+[1] 12.43883
+[1] 51.11849
+[1] 12.60923
+[1] 51.11849
+[1] 12.77962
+[1] 51.11849
+[1] 12.95002
+[1] 51.11849
+[1] 13.12041
+[1] 51.11849
+[1] 13.29081
+[1] 51.11849
+[1] 13.4612
+[1] 51.11849
+[1] 13.6316
+[1] 51.11849
+[1] 13.80199
+[1] 51.11849
+[1] 13.97239
+[1] 51.11849
+[1] 14.14278
+[1] 51.11849
+[1] 14.31318
+[1] 51.11849
+[1] 14.48357
+[1] 51.11849
+[1] 14.65397
+[1] 51.11849
+[1] 14.82436
+[1] 51.11849
+[1] 14.99476
+[1] 51.11849
+[1] 15.16515
+[1] 51.11849
+[1] 15.33555
+[1] 51.11849
+[1] 15.50594
+[1] 51.11849
+[1] 15.67634
+[1] 51.11849
+[1] 15.84673
+[1] 51.11849
+[1] 16.01713
+[1] 51.11849
+[1] 16.18752
+[1] 51.11849
+[1] 16.35792
+[1] 51.11849
+[1] 16.52831
+[1] 51.11849
+[1] 16.69871
+[1] 51.11849
+[1] 16.8691
+[1] 51.11849
+[1] 17.0395
+[1] 51.11849
+[1] 17.20989
+[1] 51.11849
+[1] 17.38029
+[1] 51.11849
+[1] 17.55068
+[1] 51.11849
+[1] 17.72108
+[1] 51.11849
+[1] 17.89147
+[1] 51.11849
+[1] 18.06186
+[1] 51.11849
+[1] 18.23226
+[1] 51.11849
+[1] 18.40265
+[1] 51.11849
+[1] 18.57305
+[1] 51.11849
+[1] 18.74344
+[1] 51.11849
+[1] 18.91384
+[1] 51.11849
+[1] 19.08423
+[1] 51.11849
+[1] 19.25463
+[1] 51.11849
+[1] 19.42502
+[1] 51.11849
+[1] 19.59542
+[1] 51.11849
+[1] 19.76581
+[1] 51.11849
+[1] 19.93621
+[1] 51.11849
+[1] 20.1066
+[1] 51.11849
+[1] 20.277
+[1] 51.11849
+[1] 20.44739
+[1] 51.11849
+[1] 20.61779
+[1] 51.11849
+[1] 20.78818
+[1] 51.11849
+[1] 20.95858
+[1] 51.11849
+[1] 21.12897
+[1] 51.11849
+[1] 21.29937
+[1] 51.11849
+[1] 21.46976
+[1] 51.11849
+[1] 21.64016
+[1] 51.11849
+[1] 21.81055
+[1] 51.11849
+[1] 21.98095
+[1] 51.11849
+[1] 22.15134
+[1] 51.11849
+[1] 22.32174
+[1] 51.11849
+[1] 22.49213
+[1] 51.11849
+[1] 22.66253
+[1] 51.11849
+[1] 22.83292
+[1] 51.11849
+[1] 23.00332
+[1] 51.11849
+[1] 23.17371
+[1] 51.11849
+[1] 23.34411
+[1] 51.11849
+[1] 23.5145
+[1] 51.11849
+[1] 23.6849
+[1] 51.11849
+[1] 23.85529
+[1] 51.11849
+[1] 24.02569
+[1] 51.11849
+[1] 24.19608
+[1] 51.11849
+[1] 24.36648
+[1] 51.11849
+[1] 24.53687
+[1] 51.11849
+[1] 24.70727
+[1] 51.11849
+[1] 24.87766
+[1] 51.11849
+[1] 25.04806
+[1] 51.11849
+[1] 25.21845
+[1] 51.11849
+[1] 25.38885
+[1] 51.11849
+[1] 25.55924
+[1] 51.11849
+[1] 25.72964
+[1] 51.11849
+[1] 25.90003
+[1] 51.11849
+[1] 26.07043
+[1] 51.11849
+[1] 26.24082
+[1] 51.11849
+[1] 26.41122
+[1] 51.11849
+[1] 26.58161
+[1] 51.11849
+[1] 26.75201
+[1] 51.11849
+[1] 26.9224
+[1] 51.11849
+[1] 27.0928
+[1] 51.11849
+[1] 27.26319
+[1] 51.11849
+[1] 27.43359
+[1] 51.11849
+[1] 27.60398
+[1] 51.11849
+[1] 27.77438
+[1] 51.11849
+[1] 27.94477
+[1] 51.11849
+[1] 28.11517
+[1] 51.11849
+[1] 28.28556
+[1] 51.11849
+[1] 28.45596
+[1] 51.11849
+[1] 28.62635
+[1] 51.11849
+[1] 28.79675
+[1] 51.11849
+[1] 28.96714
+[1] 51.11849
+[1] 29.13754
+[1] 51.11849
+[1] 29.30793
+[1] 51.11849
+[1] 29.47833
+[1] 51.11849
+[1] 29.64872
+[1] 51.11849
+[1] 29.81912
+[1] 51.11849
+[1] 29.98951
+[1] 51.11849
+[1] 30.15991
+[1] 51.11849
+[1] 30.3303
+[1] 51.11849
+[1] 30.5007
+[1] 51.11849
+[1] 30.67109
+[1] 51.11849
+[1] 30.84149
+[1] 51.11849
+[1] 31.01188
+[1] 51.11849
+[1] 31.18228
+[1] 51.11849
+[1] 31.35267
+[1] 51.11849
+[1] 31.52307
+[1] 51.11849
+[1] 31.69346
+[1] 51.11849
+[1] 31.86386
+[1] 51.11849
+[1] 32.03425
+[1] 51.11849
+[1] 32.20465
+[1] 51.11849
+[1] 32.37504
+[1] 51.11849
+[1] 32.54544
+[1] 51.11849
+[1] 32.71583
+[1] 51.11849
+[1] 32.88623
+[1] 51.11849
+[1] 33.05662
+[1] 51.11849
+[1] 33.22702
+[1] 51.11849
+[1] 33.39741
+[1] 51.11849
+[1] 33.56781
+[1] 51.11849
+[1] 33.7382
+[1] 51.11849
+[1] 33.9086
+[1] 51.11849
+[1] 34.07899
+[1] 51.11849
+[1] 34.24939
+[1] 51.11849
+[1] 34.41978
+[1] 51.11849
+[1] 34.59018
+[1] 51.11849
+[1] 34.76057
+[1] 51.11849
+[1] 34.93097
+[1] 51.11849
+[1] 35.10136
+[1] 51.11849
+[1] 35.27176
+[1] 51.11849
+[1] 35.44215
+[1] 51.11849
+[1] 35.61255
+[1] 51.11849
+[1] 35.78294
+[1] 51.11849
+[1] 35.95334
+[1] 51.11849
+[1] 36.12373
+[1] 51.11849
+[1] 36.29412
+[1] 51.11849
+[1] 36.46452
+[1] 51.11849
+[1] 36.63491
+[1] 51.11849
+[1] 36.80531
+[1] 51.11849
+[1] 36.9757
+[1] 51.11849
+[1] 37.1461
+[1] 51.11849
+[1] 37.31649
+[1] 51.11849
+[1] 37.48689
+[1] 51.11849
+[1] 37.65728
+[1] 51.11849
+[1] 37.82768
+[1] 51.11849
+[1] 37.99807
+[1] 51.11849
+[1] 38.16847
+[1] 51.11849
+[1] 38.33886
+[1] 51.11849
+[1] 38.50926
+[1] 51.11849
+[1] 38.67965
+[1] 51.11849
+[1] 38.85005
+[1] 51.11849
+[1] 39.02044
+[1] 51.11849
+[1] 39.19084
+[1] 51.11849
+[1] 39.36123
+[1] 51.11849
+[1] 39.53163
+[1] 51.11849
+[1] 39.70202
+[1] 51.11849
+[1] 39.87242
+[1] 51.11849
+[1] 40.04281
+[1] 51.11849
+[1] 40.21321
+[1] 51.11849
+[1] 40.3836
+[1] 51.11849
+[1] 40.554
+[1] 51.11849
+[1] 40.72439
+[1] 51.11849
+[1] 40.89479
+[1] 51.11849
+[1] 41.06518
+[1] 51.11849
+[1] 41.23558
+[1] 51.11849
+[1] 41.40597
+[1] 51.11849
+[1] 41.57637
+[1] 51.11849
+[1] 41.74676
+[1] 51.11849
+[1] 41.91716
+[1] 51.11849
+[1] 42.08755
+[1] 51.11849
+[1] 42.25795
+[1] 51.11849
+[1] 42.42834
+[1] 51.11849
+[1] 42.59874
+[1] 51.11849
+[1] 42.76913
+[1] 51.11849
+[1] 42.93953
+[1] 51.11849
+[1] 43.10992
+[1] 51.11849
+[1] 43.28032
+[1] 51.11849
+[1] 43.45071
+[1] 51.11849
+[1] 43.62111
+[1] 51.11849
+[1] 43.7915
+[1] 51.11849
+[1] 43.9619
+[1] 51.11849
+[1] 44.13229
+[1] 51.11849
+[1] 44.30269
+[1] 51.11849
+[1] 44.47308
+[1] 51.11849
+[1] 44.64348
+[1] 51.11849
+[1] 44.81387
+[1] 51.11849
+[1] 44.98427
+[1] 51.11849
+[1] 45.15466
+[1] 51.11849
+[1] 45.32506
+[1] 51.11849
+[1] 45.49545
+[1] 51.11849
+[1] 45.66585
+[1] 51.11849
+[1] 45.83624
+[1] 51.11849
+[1] 46.00664
+[1] 51.11849
+[1] 46.17703
+[1] 51.11849
+[1] 46.34743
+[1] 51.11849
+[1] 46.51782
+[1] 51.11849
+[1] 46.68822
+[1] 51.11849
+[1] 46.85861
+[1] 51.11849
+[1] 47.02901
+[1] 51.11849
+[1] 47.1994
+[1] 51.11849
+[1] 47.3698
+[1] 51.11849
+[1] 47.54019
+[1] 51.11849
+[1] 47.71059
+[1] 51.11849
+[1] 47.88098
+[1] 51.11849
+[1] 48.05138
+[1] 51.11849
+[1] 48.22177
+[1] 51.11849
+[1] 48.39217
+[1] 51.11849
+[1] 48.56256
+[1] 51.11849
+[1] 48.73296
+[1] 51.11849
+[1] 48.90335
+[1] 51.11849
+[1] 49.07375
+[1] 51.11849
+[1] 49.24414
+[1] 51.11849
+[1] 49.41454
+[1] 51.11849
+[1] 49.58493
+[1] 51.11849
+[1] 49.75533
+[1] 51.11849
+[1] 49.92572
+[1] 51.11849
+[1] 50.09612
+[1] 51.11849
+[1] 50.26651
+[1] 51.11849
+[1] 50.43691
+[1] 51.11849
+[1] 50.6073
+[1] 51.11849
+[1] 50.7777
+[1] 51.11849
+[1] 50.94809
+[1] 51.11849
+[1] 51.11849
+[1] 51.11849
+> 
+> 
+> 
+> size = length(table2$origin)
+> burnin = ceiling(size*0.1)
+> 
+> origin = table2$origin[(burnin+1):size]
+> 
+> library(coda)
+> 
+> origin_mcmc = as.mcmc(origin)
+> origin_hpd = HPDinterval(origin_mcmc, prob=0.95)
+> 
+> #up = origin_hpd[1,2]
+> up=mean(origin)
+> 
+> times <-c(0, up-27, up-24, up-21, up-18, up-15, up-12, up-9, up-6, up-3, up)
+> 
+> sizeminburnin = size - burnin
+> array_size = 10 * sizeminburnin
+> rnot <- array(1:array_size, dim=c(10,sizeminburnin))
+> 
+> current_index = match('rnot1', colnames(table2))
+> 
+> for (i in 1:10) {
++     rnot[i,] = table2[,current_index][(burnin+1):size]
++     current_index=current_index+1
++ }
+> 
+> meanrnot <- vector()
+> highrnot <- vector()
+> lowrnot <- vector()
+> 
+> for (i in 1:10) {
++     current_rnot = rnot[i,]
++     meanrnot <- c(meanrnot, median(current_rnot))
++     rnot_mcmc = as.mcmc(current_rnot)
++     rnot_hpd = HPDinterval(rnot_mcmc, prob=0.95)
++     highrnot <- c(highrnot, rnot_hpd[1,2])
++     lowrnot <- c(lowrnot, rnot_hpd[1,1])
++ }
+> 
+> times_split2 <- vector()
+> meanrnot_split2 <- vector()
+> highrnot_split2 <- vector()
+> lowrnot_split2 <- vector()
+> 
+> current_index=1
+> current_time=times[1]
+> for (i in 1:300) {
++     if (times[current_index+1]<current_time) {
++         current_index=current_index+1
++     }
++     times_split2 <- c(times_split2, current_time)
++     meanrnot_split2 <- c(meanrnot_split2, meanrnot[current_index])
++     highrnot_split2 <- c(highrnot_split2, highrnot[current_index])
++     lowrnot_split2 <- c(lowrnot_split2, lowrnot[current_index])
++     current_time=current_time+step
++     if (current_time > up) {
++         break
++     }
++ }
+> 
+> size = length(table3$origin)
+> burnin = ceiling(size*0.1)
+> 
+> origin = table3$origin[(burnin+1):size]
+> 
+> library(coda)
+> 
+> origin_mcmc = as.mcmc(origin)
+> origin_hpd = HPDinterval(origin_mcmc, prob=0.95)
+> 
+> #up = origin_hpd[1,2]
+> up=mean(origin)
+> 
+> times <-c(0, up-27, up-24, up-21, up-18, up-15, up-12, up-9, up-6, up-3, up)
+> 
+> sizeminburnin = size - burnin
+> array_size = 10 * sizeminburnin
+> rnot <- array(1:array_size, dim=c(10,sizeminburnin))
+> 
+> current_index = match('rnot1', colnames(table3))
+> 
+> for (i in 1:10) {
++     rnot[i,] = table3[,current_index][(burnin+1):size]
++     current_index=current_index+1
++ }
+> 
+> meanrnot <- vector()
+> highrnot <- vector()
+> lowrnot <- vector()
+> 
+> for (i in 1:10) {
++     current_rnot = rnot[i,]
++     meanrnot <- c(meanrnot, median(current_rnot))
++     rnot_mcmc = as.mcmc(current_rnot)
++     rnot_hpd = HPDinterval(rnot_mcmc, prob=0.95)
++     highrnot <- c(highrnot, rnot_hpd[1,2])
++     lowrnot <- c(lowrnot, rnot_hpd[1,1])
++ }
+> 
+> times_split3 <- vector()
+> meanrnot_split3 <- vector()
+> highrnot_split3 <- vector()
+> lowrnot_split3 <- vector()
+> 
+> current_index=1
+> current_time=times[1]
+> for (i in 1:300) {
++     if (times[current_index+1]<current_time) {
++         current_index=current_index+1
++     }
++     times_split3 <- c(times_split3, current_time)
++     meanrnot_split3 <- c(meanrnot_split3, meanrnot[current_index])
++     highrnot_split3 <- c(highrnot_split3, highrnot[current_index])
++     lowrnot_split3 <- c(lowrnot_split3, lowrnot[current_index])
++     current_time=current_time+step
++     if (current_time > up) {
++         break
++     }
++ }
+> 
+> ggplot() + ggtitle("Epidemic 3 sample G1 (declining)")+ geom_errorbar(aes(x = times_split1, y = meanrnot_split1, ymin = lowrnot_split1, ymax = highrnot_split1), colour = 'grey', width = 0.4)+ geom_point(aes(x = times_split1, y = meanrnot_split1))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,10)+xlim(0,xmax)
+Warning message:
+Removed 3 rows containing missing values (geom_path). 
+> 
+> ggplot() + ggtitle("Epidemic 3 sample H1 (stable)") + geom_errorbar(aes(x = times_split2, y = meanrnot_split2, ymin = lowrnot_split2, ymax = highrnot_split2), colour = 'grey', width = 0.4)+ geom_point(aes(x = times_split2, y = meanrnot_split2))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,10)+xlim(0,xmax)
+Warning message:
+Removed 2 rows containing missing values (geom_path). 
+> 
+> ggplot()  + ggtitle("Epidemic 3 sample I1 (growing)") + geom_errorbar(aes(x = times_split3, y = meanrnot_split3, ymin = lowrnot_split3, ymax = highrnot_split3), colour = 'darkgrey', width = 0.4)+ geom_point(aes(x = times_split3, y = meanrnot_split3))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,10)+xlim(0,xmax)
+Warning message:
+Removed 2 rows containing missing values (geom_path). 
+> 
+> #qplot(x = grid, y = meanrnot, asp=1)
+> #qplot(x = grid, y = highrnot, asp=1)
+> #qplot(x = grid, y = lowrnot, asp=1)
+> 
+> proc.time()
+   user  system elapsed 
+  8.113   0.117   8.279 
