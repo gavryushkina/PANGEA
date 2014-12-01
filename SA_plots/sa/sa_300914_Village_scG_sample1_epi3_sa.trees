@@ -1,10 +1,11 @@
 Reading file 300914_Village_scG_sample1_epi3_sa.trees
 translation map size = 252
-There are 2353 trees in the file. The first 235 are removed as a burn-in.
+There are 3092 trees in the file. The first 309 are removed as a burn-in.
 
 Count 	 Percent 	 SA
 
-185        8.73      3821-FEMALE_SAMPLED_50.3877728339134
-104        4.91      8225-MALE_SAMPLED_49.1581500582246
-6          0.28      10994-MALE_SAMPLED_48.6385076364817
+268        9.63      3821-FEMALE_SAMPLED_50.3877728339134
+207        7.44      8225-MALE_SAMPLED_49.1581500582246
+9          0.32      10994-MALE_SAMPLED_48.6385076364817
+4          0.14      8597-MALE_SAMPLED_50.0965716659406
 
