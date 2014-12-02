@@ -1,7 +1,7 @@
 
-R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
-Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin10.8.0 (64-bit)
+R version 3.1.1 (2014-07-10) -- "Sock it to Me"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.1.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -836,17 +836,17 @@ Loading required package: lattice
 +     }
 + }
 > 
-> ggplot() + ggtitle("Epidemic 3 sample G1 (declining)")+ geom_errorbar(aes(x = times_split1, y = meanrnot_split1, ymin = lowrnot_split1, ymax = highrnot_split1), colour = 'grey', width = 0.4)+ geom_point(aes(x = times_split1, y = meanrnot_split1))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,5)+xlim(0,xmax)
+> ggplot() + ggtitle("Epidemic 1 sample A (stable)")+ geom_errorbar(aes(x = times_split1, y = meanrnot_split1, ymin = lowrnot_split1, ymax = highrnot_split1), colour = 'grey', width = 0.4)+ geom_point(aes(x = times_split1, y = meanrnot_split1))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,5)+xlim(0,xmax)
 Warning messages:
 1: Removed 2 rows containing missing values (geom_path). 
 2: Removed 87 rows containing missing values (geom_point). 
 > 
-> ggplot() + ggtitle("Epidemic 3 sample H1 (stable)") + geom_errorbar(aes(x = times_split2, y = meanrnot_split2, ymin = lowrnot_split2, ymax = highrnot_split2), colour = 'grey', width = 0.4)+ geom_point(aes(x = times_split2, y = meanrnot_split2))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,5)+xlim(0,xmax)
+> ggplot() + ggtitle("Epidemic 1 sample B (growing)") + geom_errorbar(aes(x = times_split2, y = meanrnot_split2, ymin = lowrnot_split2, ymax = highrnot_split2), colour = 'grey', width = 0.4)+ geom_point(aes(x = times_split2, y = meanrnot_split2))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,5)+xlim(0,xmax)
 Warning messages:
 1: Removed 2 rows containing missing values (geom_path). 
 2: Removed 88 rows containing missing values (geom_point). 
 > 
-> ggplot()  + ggtitle("Epidemic 3 sample I1 (growing)") + geom_errorbar(aes(x = times_split3, y = meanrnot_split3, ymin = lowrnot_split3, ymax = highrnot_split3), colour = 'grey', width = 0.4)+ geom_point(aes(x = times_split3, y = meanrnot_split3))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,5)+xlim(0,xmax)
+> ggplot()  + ggtitle("Epidemic 1 sample C (declining)") + geom_errorbar(aes(x = times_split3, y = meanrnot_split3, ymin = lowrnot_split3, ymax = highrnot_split3), colour = 'grey', width = 0.4)+ geom_point(aes(x = times_split3, y = meanrnot_split3))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,5)+xlim(0,xmax)
 Warning messages:
 1: Removed 2 rows containing missing values (geom_path). 
 2: Removed 88 rows containing missing values (geom_point). 
@@ -857,4 +857,4 @@ Warning messages:
 > 
 > proc.time()
    user  system elapsed 
-  9.412   0.945  48.961 
+  3.444   0.066   3.580 

@@ -214,11 +214,11 @@ for (i in 1:300) {
     }
 }
 
-ggplot() + ggtitle("Epidemic 3 sample G1 (declining)")+ geom_errorbar(aes(x = times_split1, y = meanrnot_split1, ymin = lowrnot_split1, ymax = highrnot_split1), colour = 'grey', width = 0.4)+ geom_point(aes(x = times_split1, y = meanrnot_split1))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,5)+xlim(0,xmax)
+ggplot() + ggtitle("Epidemic 1 sample A (stable)")+ geom_errorbar(aes(x = times_split1, y = meanrnot_split1, ymin = lowrnot_split1, ymax = highrnot_split1), colour = 'grey', width = 0.4)+ geom_point(aes(x = times_split1, y = meanrnot_split1))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,5)+xlim(0,xmax)
 
-ggplot() + ggtitle("Epidemic 3 sample H1 (stable)") + geom_errorbar(aes(x = times_split2, y = meanrnot_split2, ymin = lowrnot_split2, ymax = highrnot_split2), colour = 'grey', width = 0.4)+ geom_point(aes(x = times_split2, y = meanrnot_split2))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,5)+xlim(0,xmax)
+ggplot() + ggtitle("Epidemic 1 sample B (growing)") + geom_errorbar(aes(x = times_split2, y = meanrnot_split2, ymin = lowrnot_split2, ymax = highrnot_split2), colour = 'grey', width = 0.4)+ geom_point(aes(x = times_split2, y = meanrnot_split2))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,5)+xlim(0,xmax)
 
-ggplot()  + ggtitle("Epidemic 3 sample I1 (growing)") + geom_errorbar(aes(x = times_split3, y = meanrnot_split3, ymin = lowrnot_split3, ymax = highrnot_split3), colour = 'grey', width = 0.4)+ geom_point(aes(x = times_split3, y = meanrnot_split3))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,5)+xlim(0,xmax)
+ggplot()  + ggtitle("Epidemic 1 sample C (declining)") + geom_errorbar(aes(x = times_split3, y = meanrnot_split3, ymin = lowrnot_split3, ymax = highrnot_split3), colour = 'grey', width = 0.4)+ geom_point(aes(x = times_split3, y = meanrnot_split3))+xlab("Time since origin of epidemic")+ylab("R0")+ylim(0,5)+xlim(0,xmax)
 
 #qplot(x = grid, y = meanrnot, asp=1)
 #qplot(x = grid, y = highrnot, asp=1)
